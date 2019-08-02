@@ -37,6 +37,13 @@ Britain is a history of repeated injuries and usurpations, all having in direct 
 establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a
 candid world.
 """
+
+
+var declarationArray = declarationOfIndependence.components(separatedBy: " ")
+var newDeclarationArray = [String]()
+
+
+print(declarationArray)
 ```
 
 ## Question 2
@@ -46,6 +53,24 @@ Make an array that contains all elements that appear more than twice in someRepe
 
 ```swift
 var someRepeatsAgain = [25,11,30,31,50,28,4,37,13,20,24,38,28,14,44,33,7,43,39,35,36,42,1,40,7,14,23,46,21,39,11,42,12,38,41,48,20,23,29,24,50,41,38,23,11,30,50,13,13,16,10,8,3,43,10,20,28,39,24,36,21,13,40,25,37,39,31,4,46,20,38,2,7,11,11,41,45,9,49,31,38,23,41,16,49,29,14,6,6,11,5,39,13,17,43,1,1,15,25]
+
+var repeatingNumDict = [Int: Int]()
+var frequentNums = [Int]()
+for num in someRepeatsAgain {
+
+if repeatingNumDict.keys.contains(num) {
+repeatingNumDict[num] = repeatingNumDict[num]! + 1
+} else {
+repeatingNumDict[num] = 1
+}
+}
+
+for (key,value) in repeatingNumDict {
+if value >= 2 {
+frequentNums.append(key)
+}
+}
+print(frequentNums)
 ```
 
 ## Question 3
@@ -54,10 +79,21 @@ Identify if there are 3 integers in the following array that sum to 10. If so, p
 
 ```swift
 var tripleSumArr = [-20,-14, -8,-5,-3,-2,1,2,3,4,9,15,20,30]
+let sum = 10
+
+for firstNumInArray in tripleSumArr {
+for secondNumInArray in tripleSumArr where secondNumInArray != firstNumInArray {
+for thirdNumInArray in tripleSumArr where thirdNumInArray != firstNumInArray && thirdNumInArray != secondNumInArray {
+if firstNumInArray + secondNumInArray + thirdNumInArray == sum {
+print(firstNumInArray, secondNumInArray, thirdNumInArray)
+}
+}
+}
+}
 ```
 
 
-## Question 3
+## Question 4
 
 ```swift
 let letterValues = [
@@ -98,7 +134,7 @@ b. Sort the string below in ascending order according the dictionary letterValue
 var codeStringTwo = "znwemnrfewpiqn"
 
 
-## Question 4
+## Question 5
 
 Given an Array of Arrays of Ints, write a function that returns the Array of Ints with the largest sum:
 
@@ -109,7 +145,7 @@ Input: [[2,4,1],[3,0],[9,3]]
 Output: [9,3]
 ```
 
-## Question 5
+## Question 6
 
 ```swift
 struct Receipt {
@@ -129,7 +165,7 @@ b. Write a function that takes in an array of `Receipts` and returns an array of
 
 c. Write a function that takes in an array of `Receipts` and returns an array of those receipts sorted by price
 
-## Question 6
+## Question 7
 
 a. The code below doesn't compile.  Why?  Fix it so that it does compile.
 
@@ -161,7 +197,7 @@ let jason = edgar
 jason.name = "Jason"
 ```
 
-## Question 7
+## Question 8
 
 ```
 struct BankAccount {
@@ -188,15 +224,7 @@ d. Add a property called `startingBalance`.  Have this property be set to the or
 
 e. Add a method called `totalGrowth` that returns a double representing the change in the balance from the starting balance to the current balance
 
-## Question 8
-
-```swift
-enum GameOfThronesHouse: String {
-    case stark, lannister, targaryen, baratheon
-}
-```
-
-a. Write a function that takes an instance of GameOfThronesHouse as input and, using a switch statement, returns the correct house words.
+## Question 9
 
 ```
 House Baratheon - Ours is the Fury
@@ -206,11 +234,61 @@ House Stark - Winter is coming
 House Targaryen - Fire and Blood
 
 House Lannister - A Lannister always pays his debts
+
+//a. Write a function that takes an instance of GameOfThronesHouse as input and, using a switch statement, returns the correct house words.
+
+func houseWords1(_ GOT: GameOfThronesHouse) -> String {
+var houseWords = String()
+
+switch GOT {
+case .stark:
+houseWords = "Winter is coming"
+case .lannister:
+houseWords = "A Lannister always pays his debts"
+case .targaryen:
+houseWords = "Fire and Blood"
+case .baratheon:
+houseWords = "Ours is the Fury"
+}
+print(houseWords)
+return houseWords
+}
+
+let myFavGOTFamily = GameOfThronesHouse.lannister
+myFavGOTFamily.houseWords(.lannister)
+
+houseWords1(.stark)
 ```
 
 b. Move that function to inside the enum as a method
 
-## Question 9
+```swift
+enum GameOfThronesHouse: String {
+case stark
+case lannister
+case targaryen
+case baratheon
+
+func houseWords(_ GOT: GameOfThronesHouse) -> String {
+var houseWords = String()
+
+switch self {
+case .stark:
+houseWords = "Winter is coming"
+case .lannister:
+houseWords = "A Lannister always pays his debts"
+case .targaryen:
+houseWords = "Fire and Blood"
+case .baratheon:
+houseWords = "Ours is the Fury"
+}
+print(houseWords)
+return houseWords
+}
+}
+```
+
+## Question 10
 
 What are the contents of `library1` and `library2`? Explain why.
 
@@ -230,11 +308,16 @@ class MusicLibrary {
 let library1 = MusicLibrary()
 library1.add(track: "Michelle")
 library1.add(track: "Voodoo Child")
-let library2 = library
+let library2 = library//assuming this is a typo for library1
 library2.add(track: "Come As You Are")
+
+
+****  They both will hold the same tracks(3).  This is because library1 is an instance of MusicLibrary() which is a reference type.
+
+if it is not a typo, then there will be an error because there are no variables instantiated with the name "library"
 ```
 
-## Question 10
+## Question 11
 
 Make a function that takes in an array of strings and returns an array of strings. The function should determine if the string can be typed out using just one row on the keyboard. If the string can be typed out using just one row, that string should be in the returned array.  
 
@@ -242,4 +325,19 @@ Make a function that takes in an array of strings and returns an array of string
 Input: ["Hello", "Alaska", "Dad", "Peace", "Power"]
 
 Output: ["Alaska", "Dad", "Power"]
+
+
+let stringArray = ["Hello", "Alaska", "Dad", "Peace", "Power"]
+
+func findWords(_ words: [String]) -> [String] {
+let (firstrow, secondRow, thirdRow) = (Set("QWERTYUIOPqwertyuiop"), Set("ASDFGHJKLasdfghjkl"), Set("ZXCVBNMzxcvbnm"))
+
+let strs = words.filter{
+let theSet = Set($0)
+return theSet.union(firstrow) == firstrow || theSet.union(secondRow) == secondRow || theSet.union(thirdRow) == thirdRow
+}
+return strs
+}
+
+findWords(stringArray)
 ```
